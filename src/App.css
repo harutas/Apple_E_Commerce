@@ -1,0 +1,37 @@
+body {
+  font-family: "SF Pro JP", "SF Pro Text", "SF Pro Icons", "AOS Icons", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.App {
+  text-align: center;
+}
+
+.h400 {
+  height: 400px;
+}
+
+.h300 {
+  height: 300px;
+}
+
+.rem20 {
+  width: 20rem;
+}
+
+.item-img {
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  aspect-ratio: auto 600 / 500;
+}
+
+.img-container {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.img-container .item-img {
+  height: 100%;
+  width: auto;
+}
