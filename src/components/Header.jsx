@@ -9,6 +9,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { createTheme } from '@mui/material/styles';
 import { purple } from '@mui/material/colors';
 
+import { Link } from 'react-router-dom';
+
 const Header = () => {
   return (
     <Box>
@@ -20,6 +22,8 @@ const Header = () => {
             color="inherit"
             aria-label="apple"
             sx={{ mr: 2 }}
+            component={Link}
+            to="/"
             >
             <AppleIcon />
           </IconButton>
@@ -31,6 +35,8 @@ const Header = () => {
             size="large"
             color="inherit"
             aria-label="favorite"
+            component={Link}
+            to="/favorite"
             >
             <FavoriteIcon />
           </IconButton>

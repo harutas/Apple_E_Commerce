@@ -36,9 +36,9 @@ const ProductCardContent = styled(CardContent)`
 
 const Image = (props) => {
   return (
-    <div className='img-container h300'>
-      <img src={props.image} className="item-img" alt="" />
-    </div>
+    <Box sx={{height: 300}} >
+      <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={props.image} className="" alt="" />
+    </Box>
   )
 }
 

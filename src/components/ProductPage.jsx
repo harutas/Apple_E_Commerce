@@ -2,7 +2,7 @@ import Category from "./Category"
 
 const ProductPage = (props) => {
   return (
-    <div className="container">
+    <div className="container pt-3">
       <Category products={props.products['Mac']} category={'Mac'} />
       <Category products={props.products['iPhone']} category={'iPhone'} />
       <Category products={props.products['iPad']} category={'iPad'} />
