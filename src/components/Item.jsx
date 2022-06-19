@@ -2,31 +2,56 @@ import styled from '@emotion/styled';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import IconButton from '@mui/material/IconButton';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, createTheme, Stack, ThemeProvider, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { pink } from '@mui/material/colors';
 
-const Item = (props) => {
+const Item = ({item, products, setProducts}) => {
+
+  // お気に入りの切替
+  const handleToggleFavorite = () => {
+    const newProductList = products.map((product) => {
+      if (product.productName === item.productName) {
+        product.isFavorite = !product.isFavorite;
+      }
+      return product;
+    });
+    setProducts(newProductList);
+  }
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: pink[500]
+      }
+    }
+  })
+
   return (
     <Box m={2}>
       <Card sx={{ minWidth: 275}} className="rem20">
         <ProductCardContent>
-          <Image image={props.item.image} />
-          <Title title={props.item.productName} />
-          <Price description={props.item.price} />
+          <Image image={item.image} />
+          <Title title={item.productName} />
+          <Price price={item.price} />
           <Stack direction={"row"} justifyContent={"end"} alignItems={"center"}>
-            <IconButton color="default" aria-label="favorite">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton color="default" aria-label="add to shopping cart" sx={{marginLeft: 1}}>
-              <AddShoppingCartIcon />
-            </IconButton>
+            <ThemeProvider theme={theme}>
+              <IconButton color={item.isFavorite ? "primary" : "default"} aria-label="favorite" onClick={() => handleToggleFavorite()}>
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton color="default" aria-label="add to shopping cart" sx={{marginLeft: 1}}>
+                <AddShoppingCartIcon />
+              </IconButton>
+            </ThemeProvider>
           </Stack>
         </ProductCardContent>
       </Card>
     </Box>
   )
 }
+
+
 
 const ProductCardContent = styled(CardContent)`
   &:last-child {
@@ -53,7 +78,7 @@ const Title = (props) => {
 const Price = (props) => {
   return (
     <Box textAlign={"end"} pe={1}>
-      <Typography sx={{margin: 0}} paragraph={true}>{props.description.toLocaleString()}円(税込)から</Typography>
+      <Typography sx={{margin: 0}} paragraph={true}>{props.price.toLocaleString()}円(税込)から</Typography>
     </Box>
   )
 }
