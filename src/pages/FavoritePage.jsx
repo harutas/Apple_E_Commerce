@@ -1,41 +1,67 @@
 import { Box, Divider, Typography, Button, Grid } from "@mui/material"
 
-const FavoritePage = (props) => {
+const FavoritePage = ({products, setProducts}) => {
+
+  const items = products.filter((product) => {
+    return product.isFavorite;
+  });
+
+  const listItems = items.map((item) => 
+    <FavoriteItem item={item} key={item.productName} products={products} setProducts={setProducts} />
+  );
+
+  if (items.length === 0) {
+    return (
+      <Box className="container">
+        <Typography textAlign={"center"} sx={{mt: 1}} variant="h5" component="h1">★お気に入り登録なし★</Typography>
+      </Box>
+    ) 
+  }
 
   return (
-    <div className="container">
+    <Box className="container">
       <Typography sx={{mt: 1}} variant="h3" component="h1">Favorite Items</Typography>
       <Box sx={{pt: 1}}>
         <Divider></Divider>
-        <FavoriteItem name="MacBook Air" image="images/macbook-air.jpeg"></FavoriteItem>
-        <FavoriteItem name="iPhone 13 Pro" image="images/iphone13pro.jpeg"></FavoriteItem>
-        <FavoriteItem name="iPad Air" image="images/ipad-air.jpeg"></FavoriteItem>
+        {listItems}
       </Box>
-    </div>
+    </Box>
   )
 }
 
-const FavoriteItem = (props) => {
+const FavoriteItem = ({item, products, setProducts}) => {
+
+  // お気に入りから削除
+  const handleToggleFavorite = () => {
+    const newProductList = products.map((product) => {
+      if (product.productName === item.productName) {
+        product.isFavorite = !product.isFavorite;
+      }
+      return product;
+    });
+    setProducts(newProductList);
+  }
+  
   return (
     <>
       <Grid container alignItems="center" sx={{my: 1}}>
         <Grid item xs={5} sm={3} sx={{display: "flex", justifyContent: "center"}}>
-          <Image image={props.image}/>
+          <Image image={item.image}/>
         </Grid>
         <Box sx={{flexGrow: 1}}></Box>
         <Grid container item xs={7} sm={9} justifyContent="end">
             <Grid item sm={8} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-              <Title name={props.name}/>
+              <Title name={item.productName}/>
             </Grid>
             <Grid item sm={4}>
-              <Price/>
+              <Price price={item.price} />
               <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
                 <Button sx={{minWidth: 170}} color="secondary" variant="contained" disableElevation>
                   カートに追加する
                 </Button>
               </Box>
               <Box sx={{display: "flex", justifyContent: "end"}}>
-                <Button sx={{minWidth: 170}} color="warning" variant="contained" disableElevation>
+                <Button sx={{minWidth: 170}} color="warning" variant="contained" disableElevation onClick={() => handleToggleFavorite()}>
                   お気に入りから削除
                 </Button>
               </Box>
@@ -64,7 +90,7 @@ const Title = (props) => {
 const Price = (props) => {
   return (
     <Box textAlign={"end"}>
-      <Typography sx={{margin: 0}} variant="h6" paragraph={true}>148,280円</Typography>
+      <Typography sx={{margin: 0}} variant="h6" paragraph={true}>{props.price.toLocaleString()}円</Typography>
     </Box>
   )
 }

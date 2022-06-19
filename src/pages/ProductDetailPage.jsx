@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const ProductDetailPage = () => {
+const ProductDetailPage = (props) => {
   return (
     <div className="container">
       <Typography sx={{mt: 1}} variant="h3" component="h1">Product Datail</Typography>
