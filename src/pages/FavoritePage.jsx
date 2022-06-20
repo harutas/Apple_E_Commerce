@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Box, Divider, Typography, Button, Grid } from "@mui/material"
 
 const FavoritePage = ({products, setProducts, cart, setCart}) => {
@@ -61,7 +62,7 @@ const FavoriteItem = ({item, products, setProducts, cart, setCart}) => {
 
     setCart(prevState => [...prevState, {
       ...item,
-      amount: 1
+      quantity: 1
     }]);
 
   }
@@ -87,7 +88,9 @@ const FavoriteItem = ({item, products, setProducts, cart, setCart}) => {
     <>
       <Grid container alignItems="center" sx={{my: 1}}>
         <Grid item xs={5} sm={3} sx={{display: "flex", justifyContent: "center"}}>
-          <Image image={item.image}/>
+          <Link to={`/${item.productName}`}>
+            <Image image={item.image}/>
+          </Link>
         </Grid>
         <Box sx={{flexGrow: 1}}></Box>
         <Grid container item xs={7} sm={9} justifyContent="end">

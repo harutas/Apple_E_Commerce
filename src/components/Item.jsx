@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -39,7 +40,7 @@ const Item = ({item, products, setProducts, cart, setCart}) => {
 
     setCart(prevState => [...prevState, {
       ...item,
-      amount: 1
+      quantity: 1
     }]);
 
   }
@@ -73,7 +74,9 @@ const Item = ({item, products, setProducts, cart, setCart}) => {
     <Box m={2}>
       <Card sx={{ minWidth: 275}} className="rem20">
         <ProductCardContent>
-          <Image image={item.image} />
+          <Link to={`/${item.productName}`}>
+            <Image image={item.image} />
+          </Link>
           <Title title={item.productName} />
           <Price price={item.price} />
           <Stack direction={"row"} justifyContent={"end"} alignItems={"center"}>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Box, Typography, Grid, FormControl, OutlinedInput, InputAdornment, Button, Divider } from "@mui/material"
 
 const CartPage = ({products, setProducts, cart, setCart}) => {
@@ -23,7 +24,6 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
       <Typography sx={{mt: 1}} variant="h3" component="h1">Shopping Cart</Typography>
 
       <Grid container>
-
         <Grid item xs={12} md={8} >
           <Box sx={{p: 1, mr: {xs: 0, md: 1}, mb: 1}}>
             <Divider/>
@@ -76,14 +76,16 @@ const CartItem = ({item, products, setProducts, cart, setCart}) => {
     <>
       <Grid container sx={{my: 1}}>
         <Grid item xs={3} >
-          <Image image={item.image} />
+          <Link to={`/${item.productName}`}>
+            <Image image={item.image} />
+          </Link>
         </Grid>
         <Grid item xs={5} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
           <Title title={item.productName} />
         </Grid>
         <Grid item xs={4} sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "end"}}>
           <Price price={item.price} />
-          <Amount amount={item.amount} />
+          <Quantity quantity={item.quantity} />
           <DeleteCartButton onClick={() => removeShoppingCart()} />
         </Grid>
       </Grid>
@@ -112,7 +114,7 @@ const Price = (props) => {
   )
 }
 
-const Amount = (props) => {
+const Quantity = (props) => {
 
   return (
     <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
@@ -123,7 +125,7 @@ const Amount = (props) => {
           id="delete-from-cart"
           type='number'
           name="delete-from-cart"
-          value={props.amount}
+          value={props.quantity}
           // onChange={handleChange}
           endAdornment={<InputAdornment position="end">個</InputAdornment>}
           size="small"
@@ -136,7 +138,7 @@ const Amount = (props) => {
 const DeleteCartButton = (props) => {
   return (
     <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
-      <Button sx={{minWidth: 135}} color="primary" variant="contained" disableElevation onClick={props.onClick}>
+      <Button sx={{minWidth: 135}} color="secondary" variant="contained" disableElevation onClick={props.onClick}>
         カートから削除
       </Button>
     </Box>

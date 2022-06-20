@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import InputLabel from '@mui/material/InputLabel';
+import React, {useState} from 'react';import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import Category from "../components/Category";
 import { Box } from '@mui/material';
+
 
 const ProductPage = ({products, setProducts, cart, setCart}) => {
 
