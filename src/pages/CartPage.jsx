@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Box, Typography, Grid, FormControl, OutlinedInput, InputAdornment, Button, Divider } from "@mui/material"
+import { Box, Typography, Grid, FormControl, Select, InputLabel, MenuItem, Button, Divider } from "@mui/material"
 
 const CartPage = ({products, setProducts, cart, setCart}) => {
   if (cart.length === 0) return (
@@ -19,6 +19,38 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
       setCart={setCart}
     />
   )
+
+  // 小計
+  const totalQuantity = () => {
+    return cart.reduce(((previousValue, currentValue) => previousValue + currentValue.quantity), 0);
+  }
+
+  // 合計
+  const totalPayment = () => {
+    return cart.reduce((previousValue, currentValue) => {
+      return previousValue + currentValue.price * currentValue.quantity;
+    }, 0);
+  }
+
+  // カートのリセット
+  const buyProducts = () => {
+    if (window.confirm("購入を確定します。よろしいですか？")) {
+      resetIsInCart();
+      setCart([]);
+      alert("購入が完了しました。");
+    } else {
+      return ;
+    }
+  }
+
+  // カート情報のリセット
+  const resetIsInCart = () => {
+    const newProductList = products.map((product) => {
+      return product.isInCart = false;
+    })
+    setCart(newProductList);
+  }
+
   return (
     <div className="container">
       <Typography sx={{mt: 1}} variant="h3" component="h1">Shopping Cart</Typography>
@@ -31,20 +63,20 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} pt={1}>
           <Box sx={{width: "100%", border: "solid 2px grey", p: 2}}>
             <Box sx={{display: "flex", justifyContent: "space-between"}}>
               <Typography sx={{m: 0}} variant="h6" paragraph={true}>小計</Typography>
-              <Typography sx={{m: 0}} variant="h6" paragraph={true}>10個</Typography>
+              <Typography sx={{m: 0}} variant="h6" paragraph={true}>{totalQuantity()}個</Typography>
             </Box>
 
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
               <Typography sx={{m: 0}} variant="h6" paragraph={true}>合計</Typography>
-              <Typography sx={{m: 0}} variant="h6" paragraph={true}>148,200円</Typography>
+              <Typography sx={{m: 0}} variant="h6" paragraph={true}>{totalPayment().toLocaleString()}円</Typography>
             </Box>
 
             <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
-              <Button sx={{minWidth: 170}} color="primary" variant="contained" disableElevation>
+              <Button onClick={() => buyProducts()} sx={{minWidth: 170}} color="primary" variant="contained" disableElevation>
                 購入する
               </Button>
             </Box>
@@ -56,6 +88,18 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
 }
 
 const CartItem = ({item, products, setProducts, cart, setCart}) => {
+
+  // 商品の数量を変更
+  const changeProductQuantity = (event) => {
+    const newCartList = cart.map((product) => {
+      if (product.productName === item.productName){
+        product.quantity = event.target.value;
+      }
+      return product;
+    });
+    setCart(newCartList);
+  }
+
 
   // 買い物かごからの削除
   const removeShoppingCart = () => {
@@ -72,6 +116,7 @@ const CartItem = ({item, products, setProducts, cart, setCart}) => {
     });
     setProducts(newProductList);
   }
+
   return (
     <>
       <Grid container sx={{my: 1}}>
@@ -85,7 +130,7 @@ const CartItem = ({item, products, setProducts, cart, setCart}) => {
         </Grid>
         <Grid item xs={4} sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "end"}}>
           <Price price={item.price} />
-          <Quantity quantity={item.quantity} />
+          <Quantity quantity={item.quantity} onChange={(event) => changeProductQuantity(event)} />
           <DeleteCartButton onClick={() => removeShoppingCart()} />
         </Grid>
       </Grid>
@@ -110,7 +155,7 @@ const Title = (props) => {
 
 const Price = (props) => {
   return (
-    <Typography sx={{m: 0}} variant="h6" paragraph={true}>{props.price.toLocaleString()}円</Typography>
+    <Typography sx={{m: 0, mr: 1}} variant="h6" paragraph={true}>{props.price.toLocaleString()}円</Typography>
   )
 }
 
@@ -118,18 +163,36 @@ const Quantity = (props) => {
 
   return (
     <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-      <Typography sx={{m: 0}} paragraph={true}>数量</Typography>
-      <FormControl sx={{ m: 1, maxWidth: 100}} variant="outlined">
+      {/* <Typography sx={{m: 0}} paragraph={true}>数量</Typography> */}
+      {/* <FormControl sx={{ m: 1, maxWidth: 100}} variant="outlined">
         <OutlinedInput
           inputProps={{min: "0", max: "5"}}
           id="delete-from-cart"
           type='number'
           name="delete-from-cart"
           value={props.quantity}
-          // onChange={handleChange}
+          onChange={props.onChange}
           endAdornment={<InputAdornment position="end">個</InputAdornment>}
           size="small"
         />
+      </FormControl> */}
+      <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
+        <InputLabel id="quantity">quantity</InputLabel>
+        <Select
+          labelId="quantity"
+          id="quantity"
+          defaultValue={props.quantity}
+          value={props.quantity}
+          label="quantity"
+          inputProps={{ 'aria-label': 'Without label' }}
+          onChange={props.onChange}
+        >
+          <MenuItem value={1}>1</MenuItem>
+          <MenuItem value={2}>2</MenuItem>
+          <MenuItem value={3}>3</MenuItem>
+          <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+        </Select>
       </FormControl>
     </Box>
   )
@@ -137,7 +200,7 @@ const Quantity = (props) => {
 
 const DeleteCartButton = (props) => {
   return (
-    <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
+    <Box sx={{display: "flex", justifyContent: "end", my: 1, mr: 1}}>
       <Button sx={{minWidth: 135}} color="secondary" variant="contained" disableElevation onClick={props.onClick}>
         カートから削除
       </Button>
