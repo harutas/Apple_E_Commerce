@@ -1,13 +1,13 @@
 import { Box, Divider, Typography, Button, Grid } from "@mui/material"
 
-const FavoritePage = ({products, setProducts}) => {
+const FavoritePage = ({products, setProducts, cart, setCart}) => {
 
   const items = products.filter((product) => {
     return product.isFavorite;
   });
 
   const listItems = items.map((item) => 
-    <FavoriteItem item={item} key={item.productName} products={products} setProducts={setProducts} />
+    <FavoriteItem item={item} key={item.productName} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
   );
 
   if (items.length === 0) {
@@ -29,13 +29,54 @@ const FavoritePage = ({products, setProducts}) => {
   )
 }
 
-const FavoriteItem = ({item, products, setProducts}) => {
+const FavoriteItem = ({item, products, setProducts, cart, setCart}) => {
 
   // お気に入りから削除
   const handleToggleFavorite = () => {
     const newProductList = products.map((product) => {
       if (product.productName === item.productName) {
         product.isFavorite = !product.isFavorite;
+      }
+      return product;
+    });
+    setProducts(newProductList);
+  }
+
+  // 買い物かご切替
+  const handeleToggleShoppingCart = (item) => {
+    if (!item.isInCart) addShoppingCart(item);
+    else removeShoppingCart(item);
+  }
+
+  // 買い物かごへの追加
+  const addShoppingCart = () => {
+
+    const newProductList = products.map((product) => {
+      if (product.productName === item.productName) {
+        product.isInCart = !product.isInCart;
+      }
+      return product;
+    });
+    setProducts(newProductList);
+
+    setCart(prevState => [...prevState, {
+      ...item,
+      amount: 1
+    }]);
+
+  }
+
+  // 買い物かごからの削除
+  const removeShoppingCart = () => {
+    
+    const newCartList = [...cart].filter((product) => {
+      return product.productName !== item.productName;
+    });
+    setCart(newCartList);
+
+    const newProductList = products.map((product) => {
+      if (product.productName === item.productName) {
+        product.isInCart = !product.isInCart;
       }
       return product;
     });
@@ -56,8 +97,8 @@ const FavoriteItem = ({item, products, setProducts}) => {
             <Grid item sm={4}>
               <Price price={item.price} />
               <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
-                <Button sx={{minWidth: 170}} color="secondary" variant="contained" disableElevation>
-                  カートに追加する
+                <Button sx={{minWidth: 170}} color="secondary" variant="contained" disableElevation onClick={() => handeleToggleShoppingCart(item)}>
+                  {item.isInCart ? "カートから削除" : "カートに追加する"}
                 </Button>
               </Box>
               <Box sx={{display: "flex", justifyContent: "end"}}>
@@ -75,7 +116,7 @@ const FavoriteItem = ({item, products, setProducts}) => {
 
 const Image = (props) => {
   return (
-    <Box className="img-container" sx={{width: "100%", height: 170, border: "solid 2px grey"}} >
+    <Box sx={{width: "100%", height: 170, border: "solid 2px grey"}} >
       <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={props.image}  alt="" />
     </Box>
   )

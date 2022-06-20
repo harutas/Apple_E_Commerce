@@ -45,6 +45,8 @@ const Header = () => {
             size="large"
             color="inherit"
             aria-label="to shopping page"
+            component={Link}
+            to="/cart"
             >
             <ShoppingCartIcon />
           </IconButton>

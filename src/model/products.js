@@ -5,7 +5,7 @@ const productList = [
       productName : 'MacBook Air',
       price : 115280,
       description : 'M1チップを内蔵したMacBook Airは、驚くほどポータブルなノートブックです。軽快かつスピーディーな使い心地。静かなファンレス設計。美しいRetinaディスプレイ。飛ぶように軽々と持ち運べるのは、スリムなボディと一日中使えるバッテリーのおかげです。',
-      isFavorite : true,
+      isFavorite : false,
       isInCart : false
     },
     {
