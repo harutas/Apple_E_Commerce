@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import Category from "../components/Category";
 import { Box } from '@mui/material';
 
-const ProductPage = ({products, setProducts}) => {
+const ProductPage = ({products, setProducts, cart, setCart}) => {
 
   // ソートとフィルタリングの状態を管理
   const [sort, setSort] = useState('');
@@ -31,10 +31,10 @@ const ProductPage = ({products, setProducts}) => {
   return (
     <div className="container pt-3">
       <Forms sort={sort} filter={filter} handleChange={(event) => {handleChange(event)}}/>
-      <Category sortedProducts={filterCategory(products, 'Mac')} category={'Mac'} products={products} setProducts={setProducts} />
-      <Category sortedProducts={filterCategory(products, 'iPhone')} category={'iPhone'} products={products} setProducts={setProducts} />
-      <Category sortedProducts={filterCategory(products, 'iPad')} category={'iPad'} products={products} setProducts={setProducts} />
-      <Category sortedProducts={filterCategory(products, 'Watch')} category={'Watch'} products={products} setProducts={setProducts} />
+      <Category sortedProducts={filterCategory(products, 'Mac')} category={'Mac'} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
+      <Category sortedProducts={filterCategory(products, 'iPhone')} category={'iPhone'} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
+      <Category sortedProducts={filterCategory(products, 'iPad')} category={'iPad'} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
+      <Category sortedProducts={filterCategory(products, 'Watch')} category={'Watch'} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
     </div>
   )
 }
