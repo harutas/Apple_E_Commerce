@@ -94,10 +94,10 @@ const ProductDetailPage = ({products, setProducts, cart, setCart}) => {
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
             <Typography sx={{m: 0}} paragraph={true}>数量</Typography>
               <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
-                <InputLabel id="demo-select-small">quantity</InputLabel>
+                <InputLabel id="quantity">quantity</InputLabel>
                 <Select
-                  labelId="demo-select-small"
-                  id="demo-select-small"
+                  labelId="quantity"
+                  id="quantity"
                   defaultValue={quantity}
                   value={quantity}
                   label="quantity"
