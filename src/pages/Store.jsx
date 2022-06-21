@@ -4,9 +4,7 @@ import Header from '../components/Header';
 import FavoritePage from './FavoritePage';
 import CartPage from './CartPage';
 import NoMatch from './NoMatch';
-
 import { Routes, Route } from 'react-router-dom'
-
 
 const Store = ({products, setProducts, cart, setCart}) => {
   return (
