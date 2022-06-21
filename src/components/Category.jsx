@@ -8,8 +8,8 @@ const Category = ({products, sortedProducts, category, setProducts, cart, setCar
   );
 
   return (
-    <Box>
-      <Typography sx={{fontWeight: "bold", textAlign: "start", margin: 0}} variant="h4" component="h2">{category}</Typography>
+    <Box sx={{mt: 2}}>
+      <Typography sx={{textAlign: "start", margin: 0}} variant="h4" component="h2">{category}ストア</Typography>
       <Stack direction={"row"} sx={{overflow: "auto"}}>
         {listItems}
       </Stack>

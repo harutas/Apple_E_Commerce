@@ -14,15 +14,16 @@ const FavoritePage = ({products, setProducts, cart, setCart}) => {
   if (items.length === 0) {
     return (
       <Box className="container">
+        <Typography sx={{mt: 1}} variant="h3" component="h1">Favorite Items</Typography>
         <Typography textAlign={"center"} sx={{mt: 1}} variant="h5" component="h1">★お気に入り登録なし★</Typography>
       </Box>
     ) 
   }
 
   return (
-    <Box className="container">
+    <Box className="container" sx={{mb: 2}}>
       <Typography sx={{mt: 1}} variant="h3" component="h1">Favorite Items</Typography>
-      <Box sx={{pt: 1}}>
+      <Box className="bg-white" sx={{mt: 1, p: 1, border: "solid 1px grey",}}>
         <Divider></Divider>
         {listItems}
       </Box>
@@ -87,7 +88,7 @@ const FavoriteItem = ({item, products, setProducts, cart, setCart}) => {
   return (
     <>
       <Grid container alignItems="center" sx={{my: 1}}>
-        <Grid item xs={5} sm={3} sx={{display: "flex", justifyContent: "center"}}>
+        <Grid item xs={5} sm={3} sx={{display: "flex", justifyContent: "center", border: "solid 2px grey"}}>
           <Link to={`/${item.productName}`}>
             <Image image={item.image}/>
           </Link>
@@ -119,7 +120,7 @@ const FavoriteItem = ({item, products, setProducts, cart, setCart}) => {
 
 const Image = (props) => {
   return (
-    <Box sx={{width: "100%", height: 170, border: "solid 2px grey"}} >
+    <Box sx={{width: "100%", height: 170}} >
       <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={props.image}  alt="" />
     </Box>
   )

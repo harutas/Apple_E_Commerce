@@ -1,11 +1,21 @@
 import { Link } from "react-router-dom";
 import { Box, Typography, Grid, FormControl, Select, InputLabel, MenuItem, Button, Divider } from "@mui/material"
+import FavoritePage from "./FavoritePage";
 
 const CartPage = ({products, setProducts, cart, setCart}) => {
   if (cart.length === 0) return (
-    <Box className="container">
-      <Typography textAlign={"center"} sx={{mt: 1}} variant="h5" component="h1">★カートは空です★</Typography>
-    </Box>
+    <>
+      <Box className="container">
+        <Typography sx={{mt: 1}} variant="h3" component="h1">Shopping Cart</Typography>
+        <Typography textAlign={"center"} sx={{mt: 1}} variant="h5" component="h1">★カートは空です★</Typography>
+      </Box>
+      <FavoritePage
+        products={products}
+        setProducts={setProducts}
+        cart={cart}
+        setCart={setCart}
+      />
+    </>
   )
 
   const items = cart;
@@ -52,38 +62,46 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
   }
 
   return (
-    <div className="container">
-      <Typography sx={{mt: 1}} variant="h3" component="h1">Shopping Cart</Typography>
+    <>
+      <Box className="container">
+        <Typography sx={{mt: 1}} variant="h3" component="h1">Shopping Cart</Typography>
 
-      <Grid container>
-        <Grid item xs={12} md={8} >
-          <Box sx={{p: 1, mr: {xs: 0, md: 1}, mb: 1}}>
-            <Divider/>
-            {listItems}
-          </Box>
+        <Grid container>
+          <Grid item xs={12} md={8}>
+            <Box className="bg-white" sx={{p: 1, mr: {xs: 0, md: 1}, my: 1, border: "solid 1px grey",}}>
+              <Divider/>
+              {listItems}
+            </Box>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Box className="bg-white" sx={{width: "100%", border: "solid 1px grey", p: 2, mt: 1}}>
+              <Box sx={{display: "flex", justifyContent: "space-between"}}>
+                <Typography sx={{m: 0}} variant="h6" paragraph={true}>小計</Typography>
+                <Typography sx={{m: 0}} variant="h6" paragraph={true}>{totalQuantity()}個</Typography>
+              </Box>
+
+              <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                <Typography sx={{m: 0}} variant="h6" paragraph={true}>合計</Typography>
+                <Typography sx={{m: 0}} variant="h6" paragraph={true}>{totalPayment().toLocaleString()}円</Typography>
+              </Box>
+
+              <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
+                <Button onClick={() => buyProducts()} sx={{minWidth: 170}} color="primary" variant="contained" disableElevation>
+                  購入する
+                </Button>
+              </Box>
+            </Box>
+          </Grid>
         </Grid>
-
-        <Grid item xs={12} md={4} pt={1}>
-          <Box sx={{width: "100%", border: "solid 2px grey", p: 2}}>
-            <Box sx={{display: "flex", justifyContent: "space-between"}}>
-              <Typography sx={{m: 0}} variant="h6" paragraph={true}>小計</Typography>
-              <Typography sx={{m: 0}} variant="h6" paragraph={true}>{totalQuantity()}個</Typography>
-            </Box>
-
-            <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-              <Typography sx={{m: 0}} variant="h6" paragraph={true}>合計</Typography>
-              <Typography sx={{m: 0}} variant="h6" paragraph={true}>{totalPayment().toLocaleString()}円</Typography>
-            </Box>
-
-            <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
-              <Button onClick={() => buyProducts()} sx={{minWidth: 170}} color="primary" variant="contained" disableElevation>
-                購入する
-              </Button>
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
-    </div>
+      </Box>
+      <FavoritePage
+        products={products}
+        setProducts={setProducts}
+        cart={cart}
+        setCart={setCart}
+      />
+    </>
   )
 }
 
@@ -120,18 +138,21 @@ const CartItem = ({item, products, setProducts, cart, setCart}) => {
   return (
     <>
       <Grid container sx={{my: 1}}>
-        <Grid item xs={3} >
+        <Grid item xs={5} sm={3}>
           <Link to={`/${item.productName}`}>
             <Image image={item.image} />
           </Link>
         </Grid>
-        <Grid item xs={5} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-          <Title title={item.productName} />
-        </Grid>
-        <Grid item xs={4} sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "end"}}>
-          <Price price={item.price} />
-          <Quantity quantity={item.quantity} onChange={(event) => changeProductQuantity(event)} />
-          <DeleteCartButton onClick={() => removeShoppingCart()} />
+        <Box sx={{flexGrow: 1}}></Box>
+        <Grid container item xs={7} sm={9} justifyContent="end">
+          <Grid item sm={8} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <Title title={item.productName} />
+          </Grid>
+          <Grid item sm={4} sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "end"}}>
+            <Price price={item.price} />
+            <Quantity quantity={item.quantity} onChange={(event) => changeProductQuantity(event)} />
+            <DeleteCartButton onClick={() => removeShoppingCart()} />
+          </Grid>
         </Grid>
       </Grid>
       <Divider/>
@@ -163,19 +184,6 @@ const Quantity = (props) => {
 
   return (
     <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-      {/* <Typography sx={{m: 0}} paragraph={true}>数量</Typography> */}
-      {/* <FormControl sx={{ m: 1, maxWidth: 100}} variant="outlined">
-        <OutlinedInput
-          inputProps={{min: "0", max: "5"}}
-          id="delete-from-cart"
-          type='number'
-          name="delete-from-cart"
-          value={props.quantity}
-          onChange={props.onChange}
-          endAdornment={<InputAdornment position="end">個</InputAdornment>}
-          size="small"
-        />
-      </FormControl> */}
       <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
         <InputLabel id="quantity">quantity</InputLabel>
         <Select
@@ -201,7 +209,7 @@ const Quantity = (props) => {
 const DeleteCartButton = (props) => {
   return (
     <Box sx={{display: "flex", justifyContent: "end", my: 1, mr: 1}}>
-      <Button sx={{minWidth: 135}} color="secondary" variant="contained" disableElevation onClick={props.onClick}>
+      <Button sx={{minWidth: 170}} color="secondary" variant="contained" disableElevation onClick={props.onClick}>
         カートから削除
       </Button>
     </Box>
