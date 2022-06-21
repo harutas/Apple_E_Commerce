@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
 import { Box, Divider, Typography, Button, Grid } from "@mui/material"
+import { useStoreContext } from '../context/StoreContext';
 
-const FavoritePage = ({products, setProducts, cart, setCart}) => {
+const FavoritePage = () => {
+
+  const { products } = useStoreContext();
 
   const items = products.filter((product) => {
     return product.isFavorite;
   });
 
   const listItems = items.map((item) => 
-    <FavoriteItem item={item} key={item.productName} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
+    <FavoriteItem item={item} key={item.productName} />
   );
 
   if (items.length === 0) {
@@ -31,64 +34,14 @@ const FavoritePage = ({products, setProducts, cart, setCart}) => {
   )
 }
 
-const FavoriteItem = ({item, products, setProducts, cart, setCart}) => {
+const FavoriteItem = ({item}) => {
 
-  // お気に入りから削除
-  const handleToggleFavorite = () => {
-    const newProductList = products.map((product) => {
-      if (product.productName === item.productName) {
-        product.isFavorite = !product.isFavorite;
-      }
-      return product;
-    });
-    setProducts(newProductList);
-  }
-
-  // 買い物かご切替
-  const handeleToggleShoppingCart = (item) => {
-    if (!item.isInCart) addShoppingCart(item);
-    else removeShoppingCart(item);
-  }
-
-  // 買い物かごへの追加
-  const addShoppingCart = () => {
-
-    const newProductList = products.map((product) => {
-      if (product.productName === item.productName) {
-        product.isInCart = !product.isInCart;
-      }
-      return product;
-    });
-    setProducts(newProductList);
-
-    setCart(prevState => [...prevState, {
-      ...item,
-      quantity: 1
-    }]);
-
-  }
-
-  // 買い物かごからの削除
-  const removeShoppingCart = () => {
-    
-    const newCartList = [...cart].filter((product) => {
-      return product.productName !== item.productName;
-    });
-    setCart(newCartList);
-
-    const newProductList = products.map((product) => {
-      if (product.productName === item.productName) {
-        product.isInCart = !product.isInCart;
-      }
-      return product;
-    });
-    setProducts(newProductList);
-  }
+  const { handleToggleFavorite, handeleToggleShoppingCart } = useStoreContext();
   
   return (
     <>
       <Grid container alignItems="center" sx={{my: 1}}>
-        <Grid item xs={5} sm={3} sx={{display: "flex", justifyContent: "center", border: "solid 2px grey"}}>
+        <Grid item xs={5} sm={3} sx={{display: "flex", justifyContent: "center"}}>
           <Link to={`/${item.productName}`}>
             <Image image={item.image}/>
           </Link>
@@ -101,12 +54,24 @@ const FavoriteItem = ({item, products, setProducts, cart, setCart}) => {
             <Grid item sm={4}>
               <Price price={item.price} />
               <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
-                <Button sx={{minWidth: 170}} color="secondary" variant="contained" disableElevation onClick={() => handeleToggleShoppingCart(item)}>
+                <Button
+                  sx={{minWidth: 170}}
+                  color="secondary"
+                  variant="contained"
+                  disableElevation
+                  onClick={() => handeleToggleShoppingCart(item)}
+                >
                   {item.isInCart ? "カートから削除" : "カートに追加する"}
                 </Button>
               </Box>
               <Box sx={{display: "flex", justifyContent: "end"}}>
-                <Button sx={{minWidth: 170}} color="warning" variant="contained" disableElevation onClick={() => handleToggleFavorite()}>
+                <Button
+                  sx={{minWidth: 170}}
+                  color="warning"
+                  variant="contained"
+                  disableElevation
+                  onClick={() => handleToggleFavorite(item)}
+                >
                   お気に入りから削除
                 </Button>
               </Box>

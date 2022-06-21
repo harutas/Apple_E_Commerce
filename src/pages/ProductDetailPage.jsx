@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography, Box, Button, Grid, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import NoMatch from "./NoMatch";
+import { useStoreContext } from '../context/StoreContext';
 
-const ProductDetailPage = ({products, setProducts, cart, setCart}) => {
+
+const ProductDetailPage = () => {
+
+  const { products, handleToggleFavorite, handeleToggleShoppingCart } = useStoreContext();
   const [ quantity, setQuantity ] = useState(1);
   const navigate = useNavigate();
 
@@ -18,81 +22,27 @@ const ProductDetailPage = ({products, setProducts, cart, setCart}) => {
       )
     };
 
-    const handleChange = (event) => {
-      setQuantity(event.target.value);
-    };
-    
-  // お気に入りの切替
-  const handleToggleFavorite = (item) => {
-    const newProductList = products.map((product) => {
-      if (product.productName === item.productName) {
-        product.isFavorite = !product.isFavorite;
-      }
-      return product;
-    });
-    setProducts(newProductList);
-  }
-
-  // 買い物かご切替
-  const handeleToggleShoppingCart = (item) => {
-    if (!item.isInCart) addShoppingCart(item);
-    else removeShoppingCart(item);
-  }
-
-  // 買い物かごへの追加
-  const addShoppingCart = (item) => {
-
-    const newProductList = products.map((product) => {
-      if (product.productName === item.productName) {
-        product.isInCart = !product.isInCart;
-      }
-      return product;
-    });
-    setProducts(newProductList);
-
-    setCart(prevState => [...prevState, {
-      ...item,
-      quantity: quantity
-    }]);
-
-  }
-
-  // 買い物かごからの削除
-  const removeShoppingCart = (item) => {
-    
-    const newCartList = [...cart].filter((product) => {
-      return product.productName !== item.productName;
-    });
-    setCart(newCartList);
-
-    const newProductList = products.map((product) => {
-      if (product.productName === item.productName) {
-        product.isInCart = !product.isInCart;
-      }
-      return product;
-    });
-    setProducts(newProductList);
-  }
+  const handleChange = (event) => {
+  setQuantity(event.target.value);
+  };
 
   return (
     <div className="container">
       <Typography sx={{mt: 1}} variant="h3" component="h1">Product Datail</Typography>
       <Grid container>
         <Grid item xs={12} md={8} >
-          <Box className="bg-white" sx={{border: "solid 2px grey", p: 1, mr: {xs: 0, md: 1}, mb: 1}}>
+          <Box className="bg-white" sx={{border: "solid 1px grey", p: 1, mr: {xs: 0, md: 1}, mb: 1}}>
             <Box sx={{width: "100%", height: 300}} >
               <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={product.image} alt="" />
             </Box>
             <Box sx={{display: "flex", justifyContent: "center"}}>
               <Title title={product.productName} />
             </Box>
-            <Box>
-              <Description description={product.description} />
-            </Box>
+            <Description description={product.description} />
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Box className="bg-white" sx={{width: "100%", border: "solid 2px grey", p: 1}}>
+          <Box className="bg-white" sx={{width: "100%", border: "solid 1px grey", p: 1}}>
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
             <Typography sx={{m: 0}} paragraph={true}>単価</Typography>
               <Price price={product.price}/>
@@ -123,17 +73,35 @@ const ProductDetailPage = ({products, setProducts, cart, setCart}) => {
             </Box>
             <Box>
               <Box sx={{display: "flex", justifyContent: "end", my:1}}>
-                <Button onClick={() => handleToggleFavorite(product)} sx={{minWidth: 170}} color="warning" variant="contained" disableElevation>
+                <Button
+                  onClick={() => handleToggleFavorite(product)}
+                  sx={{minWidth: 170}}
+                  color="warning"
+                  variant="contained"
+                  disableElevation
+                >
                   {product.isFavorite ? "お気に入りから削除" : "お気に入りに追加"}
                 </Button>
               </Box>
               <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
-                <Button onClick={() => handeleToggleShoppingCart(product)} sx={{minWidth: 170}} color="secondary" variant="contained" disableElevation>
+                <Button
+                  onClick={() => handeleToggleShoppingCart(product)}
+                  sx={{minWidth: 170}}
+                  color="secondary"
+                  variant="contained"
+                  disableElevation
+                >
                   {product.isInCart ? "カートから削除" : "カートに追加する"}
                 </Button>
               </Box>
               <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
-                <Button onClick={() => navigate('/cart')} sx={{minWidth: 170}} color="primary" variant="contained" disableElevation>
+                <Button
+                  onClick={() => navigate('/cart')}
+                  sx={{minWidth: 170}}
+                  color="primary"
+                  variant="contained"
+                  disableElevation
+                >
                   カートに移動する
                 </Button>
               </Box>

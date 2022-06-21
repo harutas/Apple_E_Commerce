@@ -1,33 +1,25 @@
 import { Link } from "react-router-dom";
 import { Box, Typography, Grid, FormControl, Select, InputLabel, MenuItem, Button, Divider } from "@mui/material"
 import FavoritePage from "./FavoritePage";
+import { useStoreContext } from '../context/StoreContext';
 
-const CartPage = ({products, setProducts, cart, setCart}) => {
+const CartPage = () => {
+
+  const { products, setProducts, cart, setCart } = useStoreContext();
+
   if (cart.length === 0) return (
     <>
       <Box className="container">
         <Typography sx={{mt: 1}} variant="h3" component="h1">Shopping Cart</Typography>
         <Typography textAlign={"center"} sx={{mt: 1}} variant="h5" component="h1">★カートは空です★</Typography>
       </Box>
-      <FavoritePage
-        products={products}
-        setProducts={setProducts}
-        cart={cart}
-        setCart={setCart}
-      />
+      <FavoritePage />
     </>
   )
 
   const items = cart;
   const listItems = items.map((item) => 
-    <CartItem
-      item={item}
-      key={item.productName}
-      products={products}
-      setProducts={setProducts}
-      cart={cart}
-      setCart={setCart}
-    />
+    <CartItem item={item} key={item.productName} />
   )
 
   // 小計
@@ -42,23 +34,23 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
     }, 0);
   }
 
-  // カートのリセット
+  // 購入
   const buyProducts = () => {
     if (window.confirm("購入を確定します。よろしいですか？")) {
       resetIsInCart();
       setCart([]);
-      alert("購入が完了しました。");
+      alert("おめでとうございます。購入が完了しました。");
     } else {
       return ;
     }
   }
 
-  // カート情報のリセット
+  // 商品のisInCart情報をリセット
   const resetIsInCart = () => {
     const newProductList = products.map((product) => {
-      return product.isInCart = false;
+      return Object.assign({...product}, {isInCart : false});
     })
-    setCart(newProductList);
+    setProducts(newProductList);
   }
 
   return (
@@ -67,6 +59,7 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
         <Typography sx={{mt: 1}} variant="h3" component="h1">Shopping Cart</Typography>
 
         <Grid container>
+
           <Grid item xs={12} md={8}>
             <Box className="bg-white" sx={{p: 1, mr: {xs: 0, md: 1}, my: 1, border: "solid 1px grey",}}>
               <Divider/>
@@ -76,6 +69,7 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
 
           <Grid item xs={12} md={4}>
             <Box className="bg-white" sx={{width: "100%", border: "solid 1px grey", p: 2, mt: 1}}>
+
               <Box sx={{display: "flex", justifyContent: "space-between"}}>
                 <Typography sx={{m: 0}} variant="h6" paragraph={true}>小計</Typography>
                 <Typography sx={{m: 0}} variant="h6" paragraph={true}>{totalQuantity()}個</Typography>
@@ -87,25 +81,30 @@ const CartPage = ({products, setProducts, cart, setCart}) => {
               </Box>
 
               <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
-                <Button onClick={() => buyProducts()} sx={{minWidth: 170}} color="primary" variant="contained" disableElevation>
+                <Button
+                  onClick={() => buyProducts()}
+                  sx={{minWidth: 170}}
+                  color="primary"
+                  variant="contained"
+                  disableElevation
+                >
                   購入する
                 </Button>
               </Box>
+
             </Box>
           </Grid>
+          
         </Grid>
       </Box>
-      <FavoritePage
-        products={products}
-        setProducts={setProducts}
-        cart={cart}
-        setCart={setCart}
-      />
+      <FavoritePage />
     </>
   )
 }
 
-const CartItem = ({item, products, setProducts, cart, setCart}) => {
+const CartItem = ({item}) => {
+
+  const  { cart, setCart, handeleToggleShoppingCart } = useStoreContext();
 
   // 商品の数量を変更
   const changeProductQuantity = (event) => {
@@ -116,23 +115,6 @@ const CartItem = ({item, products, setProducts, cart, setCart}) => {
       return product;
     });
     setCart(newCartList);
-  }
-
-
-  // 買い物かごからの削除
-  const removeShoppingCart = () => {
-    const newCartList = [...cart].filter((product) => {
-      return product.productName !== item.productName;
-    });
-    setCart(newCartList);
-
-    const newProductList = products.map((product) => {
-      if (product.productName === item.productName) {
-        product.isInCart = !product.isInCart;
-      }
-      return product;
-    });
-    setProducts(newProductList);
   }
 
   return (
@@ -150,8 +132,21 @@ const CartItem = ({item, products, setProducts, cart, setCart}) => {
           </Grid>
           <Grid item sm={4} sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "end"}}>
             <Price price={item.price} />
-            <Quantity quantity={item.quantity} onChange={(event) => changeProductQuantity(event)} />
-            <DeleteCartButton onClick={() => removeShoppingCart()} />
+            <Quantity
+              quantity={item.quantity}
+              onChange={(event) => changeProductQuantity(event)}
+            />
+            <Box sx={{display: "flex", justifyContent: "end", my: 1, mr: 1}}>
+              <Button
+                sx={{minWidth: 170}}
+                color="secondary"
+                variant="contained"
+                disableElevation
+                onClick={() => handeleToggleShoppingCart(item)}
+              >
+                カートから削除
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Grid>
@@ -162,7 +157,7 @@ const CartItem = ({item, products, setProducts, cart, setCart}) => {
 
 const Image = (props) => {
   return (
-    <Box sx={{width: "100%", height: 170, border: "solid 2px grey"}} >
+    <Box sx={{width: "100%", height: 170}} >
       <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={props.image} alt="" />
     </Box>
   )
@@ -202,16 +197,6 @@ const Quantity = (props) => {
           <MenuItem value={5}>5</MenuItem>
         </Select>
       </FormControl>
-    </Box>
-  )
-}
-
-const DeleteCartButton = (props) => {
-  return (
-    <Box sx={{display: "flex", justifyContent: "end", my: 1, mr: 1}}>
-      <Button sx={{minWidth: 170}} color="secondary" variant="contained" disableElevation onClick={props.onClick}>
-        カートから削除
-      </Button>
     </Box>
   )
 }
