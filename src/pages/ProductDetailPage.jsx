@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography, Box, Button, Grid, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import NoMatch from "./NoMatch";
 
 const ProductDetailPage = ({products, setProducts, cart, setCart}) => {
   const [ quantity, setQuantity ] = useState(1);
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    setQuantity(event.target.value);
-  };
-
   const params = useParams();
   const product = products.find((product) => {
     return product.productName === params.productName;
   });
+  
+  if (product === undefined) {
+    return (
+      <NoMatch/>
+      )
+    };
 
+    const handleChange = (event) => {
+      setQuantity(event.target.value);
+    };
+    
   // お気に入りの切替
   const handleToggleFavorite = (item) => {
     const newProductList = products.map((product) => {
@@ -71,14 +78,13 @@ const ProductDetailPage = ({products, setProducts, cart, setCart}) => {
     <div className="container">
       <Typography sx={{mt: 1}} variant="h3" component="h1">Product Datail</Typography>
       <Grid container>
-        <Grid item xs={12} md={8}>
-          <Box sx={{border: "solid 2px grey", p: 1, mr: {xs: 0, md: 1}, mb: 1}}>
+        <Grid item xs={12} md={8} >
+          <Box className="bg-white" sx={{border: "solid 2px grey", p: 1, mr: {xs: 0, md: 1}, mb: 1}}>
             <Box sx={{width: "100%", height: 300}} >
               <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={product.image} alt="" />
             </Box>
-            <Box sx={{display: "flex", justifyContent: "space-between"}}>
+            <Box sx={{display: "flex", justifyContent: "center"}}>
               <Title title={product.productName} />
-              <Price price={product.price} />
             </Box>
             <Box>
               <Description description={product.description} />
@@ -86,7 +92,7 @@ const ProductDetailPage = ({products, setProducts, cart, setCart}) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Box sx={{width: "100%", border: "solid 2px grey", p: 1}}>
+          <Box className="bg-white" sx={{width: "100%", border: "solid 2px grey", p: 1}}>
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
             <Typography sx={{m: 0}} paragraph={true}>単価</Typography>
               <Price price={product.price}/>
@@ -141,7 +147,7 @@ const ProductDetailPage = ({products, setProducts, cart, setCart}) => {
 
 const Title = (props) => {
   return (
-    <Typography variant="h4" component="h2">{props.title}</Typography>
+    <Typography sx={{fontWeight: "bold"}} variant="h4" component="h2">{props.title}</Typography>
   )
 }
 
@@ -154,7 +160,7 @@ const Price = (props) => {
 const Description = (props) => {
   return (
     <Box sx={{width: "100%", border: "solid 2px grey", p: 1}}>
-      <Typography paragraph={true}>{props.description}</Typography>
+      <Typography sx={{m: 0, fontSize: "1.3rem"}} paragraph={true}>{props.description}</Typography>
     </Box>
   )
 }
