@@ -1,30 +1,17 @@
-import './App.css';
-import React, { useState } from 'react'
-import Store from './pages/Store'
-import productList from './model/products';
-// import ProductPage from './pages/ProductPage';
-// import ProductDetailPage from './pages/ProductDetailPage';
-// import Header from './components/Header';
-// import FavoritePage from './pages/FavoritePage';
-// import CartPage from './pages/CartPage';
-// import NoMatch from './pages/NoMatch';
+import ProductPage from './ProductPage';
+import ProductDetailPage from './ProductDetailPage';
+import Header from '../components/Header';
+import FavoritePage from './FavoritePage';
+import CartPage from './CartPage';
+import NoMatch from './NoMatch';
 
-// import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 
-const App = () => {
-  const [products, setProducts] = useState(productList);
-  const [cart, setCart] = useState([]);
-
+const Store = ({products, setProducts, cart, setCart}) => {
   return (
-    <div className="App">
-      <Store
-        products={products}
-        setProducts={setProducts}
-        cart={cart}
-        setCart={setCart}
-      />
-      {/* <Header/>
+    <>
+      <Header/>
       <Routes>
         <Route path="/" element={
           <ProductPage
@@ -61,9 +48,9 @@ const App = () => {
         />
 
         <Route path="*" element={<NoMatch/>} />
-      </Routes> */}
-    </div>
-  );
+      </Routes>
+    </>
+    )
 }
 
-export default App;
+export default Store
