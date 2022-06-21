@@ -1,10 +1,10 @@
 import { Box, Stack, Typography } from "@mui/material";
 import Item from "./Item"
 
-const Category = ({products, sortedProducts, category, setProducts, cart, setCart}) => {
+const Category = ({sortedProducts, category}) => {
   const items = sortedProducts;
   const listItems = items.map((item) => 
-    <Item item={item} key={item.productName} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
+    <Item item={item} key={item.productName} />
   );
 
   return (

@@ -1,14 +1,14 @@
-import React, {useState} from 'react';import InputLabel from '@mui/material/InputLabel';
+import React, {useState} from 'react';
+import Category from "../components/Category";
+import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import { useStoreContext } from '../context/StoreContext';
 
-import Category from "../components/Category";
-import { Box } from '@mui/material';
-
-
-const ProductPage = ({products, setProducts, cart, setCart}) => {
-
+const ProductPage = () => {
+  const  { products } = useStoreContext();
   // ソートとフィルタリングの状態を管理
   const [sort, setSort] = useState('');
   const [filter, setFilter] = useState('');
@@ -31,10 +31,10 @@ const ProductPage = ({products, setProducts, cart, setCart}) => {
   return (
     <div className="container pt-3">
       <Forms sort={sort} filter={filter} handleChange={(event) => {handleChange(event)}}/>
-      <Category sortedProducts={filterCategory(products, 'Mac')} category={'Mac'} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
-      <Category sortedProducts={filterCategory(products, 'iPhone')} category={'iPhone'} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
-      <Category sortedProducts={filterCategory(products, 'iPad')} category={'iPad'} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
-      <Category sortedProducts={filterCategory(products, 'Watch')} category={'Watch'} products={products} setProducts={setProducts} cart={cart} setCart={setCart} />
+      <Category sortedProducts={filterCategory(products, 'Mac')} category={'Mac'} />
+      <Category sortedProducts={filterCategory(products, 'iPhone')} category={'iPhone'} />
+      <Category sortedProducts={filterCategory(products, 'iPad')} category={'iPad'} />
+      <Category sortedProducts={filterCategory(products, 'Watch')} category={'Watch'} />
     </div>
   )
 }
