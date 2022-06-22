@@ -25,13 +25,13 @@ export function StoreProvider({ children }) {
   };
 
   // カート状態の切替え
-  const handeleToggleShoppingCart = (item) => {
-    if (!item.isInCart) addShoppingCart(item);
+  const handleToggleShoppingCart = (item, quantity) => {
+    if (!item.isInCart) addShoppingCart(item, quantity);
     else removeShoppingCart(item);
   };
 
   // カートへ追加
-  const addShoppingCart = (item) => {
+  const addShoppingCart = (item, quantity) => {
 
     const newProductList = products.map((product) => {
       if (product.productName === item.productName) {
@@ -43,7 +43,7 @@ export function StoreProvider({ children }) {
 
     setCart(prevState => [...prevState, {
       ...item,
-      quantity: 1
+      quantity: quantity
     }]);
 
   };
@@ -76,7 +76,7 @@ export function StoreProvider({ children }) {
     setCart,
     removeShoppingCart,
     handleToggleFavorite,
-    handeleToggleShoppingCart
+    handleToggleShoppingCart
   };
 
   return (

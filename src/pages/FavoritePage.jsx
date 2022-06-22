@@ -39,7 +39,7 @@ const FavoritePage = () => {
 
 const FavoriteItem = ({item}) => {
 
-  const { handleToggleFavorite, handeleToggleShoppingCart } = useStoreContext();
+  const { handleToggleFavorite, handleToggleShoppingCart } = useStoreContext();
   
   return (
     <>
@@ -62,7 +62,7 @@ const FavoriteItem = ({item}) => {
                   color="secondary"
                   variant="contained"
                   disableElevation
-                  onClick={() => handeleToggleShoppingCart(item)}
+                  onClick={() => handleToggleShoppingCart(item, 1)}
                 >
                   {item.isInCart ? "カートから削除" : "カートに追加する"}
                 </Button>
