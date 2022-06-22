@@ -17,7 +17,7 @@ const Item = ({item}) => {
 
   return (
     <Box m={2}>
-      <Card sx={{ minWidth: 275}} className="rem20">
+      <Card sx={{ minWidth: 275}} className="rem21">
         <ProductCardContent>
           <Link to={`/${item.productName}`}>
             <Image image={item.image} />
