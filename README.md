@@ -1,4 +1,26 @@
-# Getting Started with Create React App
+# Apple_E_Commerce
+apple製品の擬似的なECサイトです。apple製品を購入する体験ができます。
+
+## URL
+https://harutas.github.io/Apple_E_Commerce/
+
+## USAGE
+商品をお気に入り登録したり、カートに入れることができます。  
+ソート・フィルタリング機能で条件を絞って検索することができます。  
+商品の画像をクリックすると詳細ページに遷移します。  
+左上のappleボタンで商品ページに遷移します。  
+右上のハートボタンでお気に入りページに遷移します。  
+右上のカートボタンで購入ページに遷移します。
+
+## DEMO
+![Apple E-Commerce Demo](https://user-images.githubusercontent.com/96802323/175028042-a7d050e5-9f16-470e-a16a-2d8f2048f68c.png)
+
+## Tech
+* JavaScript(React.js)
+* Material UI
+* React Router
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
