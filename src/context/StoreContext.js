@@ -1,12 +1,13 @@
+// hooks
 import { createContext, useState, useContext } from "react";
+// model
 import productList from '../model/products';
-
 
 const StoreContext = createContext();
 
 export function useStoreContext() {
   return useContext(StoreContext);
-}
+};
 
 export function StoreProvider({ children }) {
   const [products, setProducts] = useState(productList);
@@ -21,15 +22,15 @@ export function StoreProvider({ children }) {
       return product;
     });
     setProducts(newProductList);
-  }
+  };
 
-  // 買い物かご切替
+  // カート状態の切替え
   const handeleToggleShoppingCart = (item) => {
     if (!item.isInCart) addShoppingCart(item);
     else removeShoppingCart(item);
-  }
+  };
 
-  // 買い物かごへの追加
+  // カートへ追加
   const addShoppingCart = (item) => {
 
     const newProductList = products.map((product) => {
@@ -45,9 +46,9 @@ export function StoreProvider({ children }) {
       quantity: 1
     }]);
 
-  }
+  };
 
-  // 買い物かごからの削除
+  // カートから削除
   const removeShoppingCart = (item) => {
 
     if (window.confirm("商品は既にカートに入っています。削除してよろしいですか？")){
@@ -66,8 +67,7 @@ export function StoreProvider({ children }) {
     } else {
       return ;
     }
-    
-  }
+  };
 
   const value = {
     products,
@@ -83,6 +83,5 @@ export function StoreProvider({ children }) {
     <StoreContext.Provider value={value}>
       {children}
     </StoreContext.Provider>
-  )
-
+  );
 }

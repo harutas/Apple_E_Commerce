@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+// router
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, Box, Button, Grid, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
-import NoMatch from "./NoMatch";
+// hooks
+import React, { useState } from "react";
 import { useStoreContext } from '../context/StoreContext';
-
+// components
+import NoMatch from "./NoMatch";
+// mui
+import { Typography, Box, Button, Grid, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 
 const ProductDetailPage = () => {
 
@@ -19,8 +22,8 @@ const ProductDetailPage = () => {
   if (product === undefined) {
     return (
       <NoMatch/>
-      )
-    };
+    );
+  }
 
   const handleChange = (event) => {
   setQuantity(event.target.value);
@@ -110,19 +113,19 @@ const ProductDetailPage = () => {
         </Grid>
       </Grid>
     </div>
-  )
+  );
 }
 
 const Title = (props) => {
   return (
     <Typography sx={{fontWeight: "bold"}} variant="h4" component="h2">{props.title}</Typography>
-  )
+  );
 }
 
 const Price = (props) => {
   return (
     <Typography sx={{m: 0}} variant="h6" paragraph={true}>{props.price.toLocaleString()}円</Typography>
-  )
+  );
 }
 
 const Description = (props) => {
@@ -130,7 +133,7 @@ const Description = (props) => {
     <Box sx={{width: "100%", border: "solid 2px grey", p: 1}}>
       <Typography sx={{m: 0, fontSize: "1.3rem"}} paragraph={true}>{props.description}</Typography>
     </Box>
-  )
+  );
 }
 
-export default ProductDetailPage
+export default ProductDetailPage;

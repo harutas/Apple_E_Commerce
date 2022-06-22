@@ -1,7 +1,11 @@
+// router
 import { Link } from "react-router-dom";
-import { Box, Typography, Grid, FormControl, Select, InputLabel, MenuItem, Button, Divider } from "@mui/material"
-import FavoritePage from "./FavoritePage";
+// hooks
 import { useStoreContext } from '../context/StoreContext';
+// components
+import FavoritePage from "./FavoritePage";
+// mui
+import { Box, Typography, Grid, FormControl, Select, InputLabel, MenuItem, Button, Divider } from "@mui/material";
 
 const CartPage = () => {
 
@@ -15,24 +19,24 @@ const CartPage = () => {
       </Box>
       <FavoritePage />
     </>
-  )
+  );
 
   const items = cart;
   const listItems = items.map((item) => 
     <CartItem item={item} key={item.productName} />
-  )
+  );
 
   // 小計
   const totalQuantity = () => {
     return cart.reduce(((previousValue, currentValue) => previousValue + currentValue.quantity), 0);
-  }
+  };
 
   // 合計
   const totalPayment = () => {
     return cart.reduce((previousValue, currentValue) => {
       return previousValue + currentValue.price * currentValue.quantity;
     }, 0);
-  }
+  };
 
   // 購入
   const buyProducts = () => {
@@ -43,7 +47,7 @@ const CartPage = () => {
     } else {
       return ;
     }
-  }
+  };
 
   // 商品のisInCart情報をリセット
   const resetIsInCart = () => {
@@ -51,7 +55,7 @@ const CartPage = () => {
       return Object.assign({...product}, {isInCart : false});
     })
     setProducts(newProductList);
-  }
+  };
 
   return (
     <>
@@ -61,7 +65,7 @@ const CartPage = () => {
         <Grid container>
 
           <Grid item xs={12} md={8}>
-            <Box className="bg-white" sx={{p: 1, mr: {xs: 0, md: 1}, my: 1, border: "solid 1px grey",}}>
+            <Box className="bg-white" sx={{p: 1, mr: {xs: 0, md: 1}, my: 1, border: "solid 1px grey"}}>
               <Divider/>
               {listItems}
             </Box>
@@ -99,7 +103,7 @@ const CartPage = () => {
       </Box>
       <FavoritePage />
     </>
-  )
+  );
 }
 
 const CartItem = ({item}) => {
@@ -115,7 +119,7 @@ const CartItem = ({item}) => {
       return product;
     });
     setCart(newCartList);
-  }
+  };
 
   return (
     <>
@@ -152,7 +156,7 @@ const CartItem = ({item}) => {
       </Grid>
       <Divider/>
     </>
-  )
+  );
 }
 
 const Image = (props) => {
@@ -160,19 +164,19 @@ const Image = (props) => {
     <Box sx={{width: "100%", height: 170}} >
       <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={props.image} alt="" />
     </Box>
-  )
+  );
 }
 
 const Title = (props) => {
   return (
     <Typography variant="h5" component="h2">{props.title}</Typography>
-  )
+  );
 }
 
 const Price = (props) => {
   return (
     <Typography sx={{m: 0, mr: 1}} variant="h6" paragraph={true}>{props.price.toLocaleString()}円</Typography>
-  )
+  );
 }
 
 const Quantity = (props) => {
@@ -198,7 +202,7 @@ const Quantity = (props) => {
         </Select>
       </FormControl>
     </Box>
-  )
+  );
 }
 
-export default CartPage
+export default CartPage;

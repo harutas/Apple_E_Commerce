@@ -1,23 +1,19 @@
+// router
+import { Link } from 'react-router-dom';
+// hooks
+import { useStoreContext } from '../context/StoreContext';
+// mui
 import { Card, CardContent,IconButton, Box, createTheme, Stack, ThemeProvider, Typography } from '@mui/material';
+import { pink } from '@mui/material/colors';
+// mui emotion
+import styled from '@emotion/styled';
+// mui icon
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { pink } from '@mui/material/colors';
-import styled from '@emotion/styled';
-
-import { Link } from 'react-router-dom';
-import { useStoreContext } from '../context/StoreContext';
 
 const Item = ({item}) => {
 
   const { handleToggleFavorite, handeleToggleShoppingCart } = useStoreContext();
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: pink[500]
-      }
-    }
-  });
 
   return (
     <Box m={2}>
@@ -50,21 +46,29 @@ const Item = ({item}) => {
         </ProductCardContent>
       </Card>
     </Box>
-  )
+  );
 }
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: pink[500]
+    }
+  }
+});
 
 const ProductCardContent = styled(CardContent)`
   &:last-child {
   padding-bottom: 16px;
  } 
-`
+`;
 
 const Image = (props) => {
   return (
     <Box sx={{height: 300}} >
       <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={props.image} className="" alt="" />
     </Box>
-  )
+  );
 }
 
 const Title = (props) => {
@@ -72,7 +76,7 @@ const Title = (props) => {
     <Box textAlign={"start"} ps={1}>
       <Typography sx={{fontWeight: "bold"}} gutterBottom={true} variant="h5" component="h3">{props.title}</Typography>
     </Box>
-  )
+  );
 }
 
 const Price = (props) => {
@@ -80,7 +84,7 @@ const Price = (props) => {
     <Box textAlign={"end"} pe={1}>
       <Typography sx={{margin: 0}} paragraph={true}>{props.price.toLocaleString()}円(税込)から</Typography>
     </Box>
-  )
+  );
 }
 
-export default Item
+export default Item;

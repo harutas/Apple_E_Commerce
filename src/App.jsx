@@ -1,6 +1,9 @@
-import './App.css';
-import Store from './pages/Store'
+// components
+import Store from './pages/Store';
+// hooks
 import { StoreProvider } from './context/StoreContext';
+// css
+import './App.css';
 
 const App = () => {
 

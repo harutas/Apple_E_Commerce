@@ -1,6 +1,9 @@
+// router
 import { Link } from "react-router-dom";
-import { Box, Divider, Typography, Button, Grid } from "@mui/material"
+// hooks
 import { useStoreContext } from '../context/StoreContext';
+// mui
+import { Box, Divider, Typography, Button, Grid } from "@mui/material";
 
 const FavoritePage = () => {
 
@@ -20,7 +23,7 @@ const FavoritePage = () => {
         <Typography sx={{mt: 1}} variant="h3" component="h1">Favorite Items</Typography>
         <Typography textAlign={"center"} sx={{mt: 1}} variant="h5" component="h1">★お気に入り登録なし★</Typography>
       </Box>
-    ) 
+    );
   }
 
   return (
@@ -31,7 +34,7 @@ const FavoritePage = () => {
         {listItems}
       </Box>
     </Box>
-  )
+  );
 }
 
 const FavoriteItem = ({item}) => {
@@ -88,13 +91,13 @@ const Image = (props) => {
     <Box sx={{width: "100%", height: 170}} >
       <Box sx={{objectFit: "contain", width: "100%", height: "100%"}} component="img" src={props.image}  alt="" />
     </Box>
-  )
+  );
 }
 
 const Title = (props) => {
   return (
     <Typography variant="h5" component="h2">{props.name}</Typography>
-  )
+  );
 }
 
 const Price = (props) => {
@@ -102,7 +105,7 @@ const Price = (props) => {
     <Box textAlign={"end"}>
       <Typography sx={{margin: 0}} variant="h6" paragraph={true}>{props.price.toLocaleString()}円</Typography>
     </Box>
-  )
+  );
 }
 
-export default FavoritePage
+export default FavoritePage;
