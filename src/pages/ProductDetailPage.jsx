@@ -10,7 +10,7 @@ import { Typography, Box, Button, Grid, InputLabel, MenuItem, FormControl, Selec
 
 const ProductDetailPage = () => {
 
-  const { products, handleToggleFavorite, handeleToggleShoppingCart } = useStoreContext();
+  const { products, handleToggleFavorite, handleToggleShoppingCart } = useStoreContext();
   const [ quantity, setQuantity ] = useState(1);
   const navigate = useNavigate();
 
@@ -61,6 +61,7 @@ const ProductDetailPage = () => {
                   value={quantity}
                   label="quantity"
                   onChange={(event) => handleChange(event)}
+                  disabled={product.isInCart}
                 >
                   <MenuItem value={1}>1</MenuItem>
                   <MenuItem value={2}>2</MenuItem>
@@ -88,7 +89,7 @@ const ProductDetailPage = () => {
               </Box>
               <Box sx={{display: "flex", justifyContent: "end", my: 1}}>
                 <Button
-                  onClick={() => handeleToggleShoppingCart(product)}
+                  onClick={() => handleToggleShoppingCart(product, quantity)}
                   sx={{minWidth: 170}}
                   color="secondary"
                   variant="contained"

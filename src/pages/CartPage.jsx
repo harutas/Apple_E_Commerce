@@ -108,7 +108,7 @@ const CartPage = () => {
 
 const CartItem = ({item}) => {
 
-  const  { cart, setCart, handeleToggleShoppingCart } = useStoreContext();
+  const  { cart, setCart, handleToggleShoppingCart } = useStoreContext();
 
   // 商品の数量を変更
   const changeProductQuantity = (event) => {
@@ -146,7 +146,7 @@ const CartItem = ({item}) => {
                 color="secondary"
                 variant="contained"
                 disableElevation
-                onClick={() => handeleToggleShoppingCart(item)}
+                onClick={() => handleToggleShoppingCart(item)}
               >
                 カートから削除
               </Button>

@@ -13,7 +13,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const Item = ({item}) => {
 
-  const { handleToggleFavorite, handeleToggleShoppingCart } = useStoreContext();
+  const { handleToggleFavorite, handleToggleShoppingCart } = useStoreContext();
 
   return (
     <Box m={2}>
@@ -37,7 +37,7 @@ const Item = ({item}) => {
                 color={item.isInCart ? "secondary" : "default"}
                 aria-label="add to shopping cart"
                 sx={{marginLeft: 1}}
-                onClick={() => handeleToggleShoppingCart(item)}
+                onClick={() => handleToggleShoppingCart(item, 1)}
                 >
                 <AddShoppingCartIcon />
               </IconButton>
