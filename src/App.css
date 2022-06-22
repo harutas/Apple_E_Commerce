@@ -3,10 +3,6 @@ body {
   font-family: "SF Pro JP", "SF Pro Text", "SF Pro Icons", "AOS Icons", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.h400 {
-  height: 400px;
-}
-
 .rem20 {
   width: 20rem;
 }

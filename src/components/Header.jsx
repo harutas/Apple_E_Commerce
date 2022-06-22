@@ -1,15 +1,17 @@
+// router
+import { Link } from 'react-router-dom';
+// mui
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import { createTheme } from '@mui/material/styles';
+import { purple } from '@mui/material/colors';
+// mui icon
 import AppleIcon from '@mui/icons-material/Apple';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { createTheme } from '@mui/material/styles';
-import { purple } from '@mui/material/colors';
-
-import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -53,7 +55,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
     </Box>
-  )
+  );
 }
 
 const theme = createTheme({
@@ -67,4 +69,4 @@ const theme = createTheme({
   },
 });
 
-export default Header
+export default Header;
