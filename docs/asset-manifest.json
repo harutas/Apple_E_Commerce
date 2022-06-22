@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Apple_E_Commerce/static/css/main.a784fb99.css",
-    "main.js": "/Apple_E_Commerce/static/js/main.8f689872.js",
+    "main.css": "/Apple_E_Commerce/static/css/main.f27a255f.css",
+    "main.js": "/Apple_E_Commerce/static/js/main.6648a1c0.js",
     "static/js/787.fbd9ce53.chunk.js": "/Apple_E_Commerce/static/js/787.fbd9ce53.chunk.js",
     "index.html": "/Apple_E_Commerce/index.html",
-    "main.a784fb99.css.map": "/Apple_E_Commerce/static/css/main.a784fb99.css.map",
-    "main.8f689872.js.map": "/Apple_E_Commerce/static/js/main.8f689872.js.map",
+    "main.f27a255f.css.map": "/Apple_E_Commerce/static/css/main.f27a255f.css.map",
+    "main.6648a1c0.js.map": "/Apple_E_Commerce/static/js/main.6648a1c0.js.map",
     "787.fbd9ce53.chunk.js.map": "/Apple_E_Commerce/static/js/787.fbd9ce53.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a784fb99.css",
-    "static/js/main.8f689872.js"
+    "static/css/main.f27a255f.css",
+    "static/js/main.6648a1c0.js"
   ]
 }
